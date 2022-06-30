@@ -22,6 +22,7 @@ class PostModelTest(TestCase):
         )
 
     def test_models_have_correct_object_names(self):
+        """Тестирование отображения значения  _str_"""
         self.post = PostModelTest.post
         self.group = PostModelTest.group
         field_str_test = {
@@ -33,6 +34,7 @@ class PostModelTest(TestCase):
                 self.assertEqual(expected_values, str(model))
 
     def test_verbose_name(self):
+        """verbose_name поля совпадает с ожидаемым."""
         post = PostModelTest.post
         group = PostModelTest.group
         field_verboses_post = {
@@ -58,6 +60,7 @@ class PostModelTest(TestCase):
                 )
 
     def test_help_text(self):
+        """help_text поля совпадает с ожидаемым."""
         post = PostModelTest.post
         group = PostModelTest.group
         field_help_post = {

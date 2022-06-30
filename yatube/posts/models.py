@@ -96,3 +96,6 @@ class Follow(CreatedModel):
         verbose_name="Ссылка на объект, на которого подписываются",
         on_delete=models.CASCADE
     )
+
+    class Meta:
+        unique_together = ("user", "author")

@@ -38,17 +38,20 @@ class PostURLTests(TestCase):
         }
 
     def test_guest_url_code_200(self):
+        """Тестирования отображения страниц не авторизованным пользователем."""
         for address, template in self.guest_url.items():
             with self.subTest(address=address):
                 response = self.guest_client.get(address)
                 self.assertTemplateUsed(response, template)
 
     def test_uthorized_user_url_code_200(self):
+        """Тестирования отображения страниц авторизованным пользователем."""
         for address, template in self.authorized_user_url.items():
             with self.subTest(address=address):
                 response = self.authorized_client.get(address)
                 self.assertTemplateUsed(response, template)
 
     def test_response_404(self):
+        """Тест на запрос к несущетсвующей странице возвращает ошибку."""
         response = self.guest_client.get("/gamepost/")
         self.assertEqual(response.status_code, HTTPStatus.NOT_FOUND)

@@ -38,6 +38,7 @@ class PostModelTest(TestCase):
         self.authorized_client.force_login(self.user)
 
     def test_create_post(self):
+        """Тестирование создания поста."""
         post_count = Post.objects.count()
         form_data = {
             "author": self.user,
@@ -61,6 +62,7 @@ class PostModelTest(TestCase):
         )
 
     def test_edit_post(self):
+        """Тестирование редактирования поста."""
         form_data = {
             "author": self.user,
             "text": "Тестовая запись 1",
@@ -98,6 +100,7 @@ class PostModelTest(TestCase):
         self.assertEqual(response_edit.status_code, HTTPStatus.OK)
 
     def test_post_image(self):
+        """Тестирования отображения изображения на странице."""
         posts_count = Post.objects.count()
         small_gif = (
             b'\x47\x49\x46\x38\x39\x61\x02\x00'
