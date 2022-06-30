@@ -3,7 +3,6 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post, Group, User, Comment, Follow
 from .forms import PostForm, CommentForm
 from .pagin import get_page_context
-from core.models import CreatedModel
 from django.views.decorators.cache import cache_page
 from django.core.paginator import Paginator
 

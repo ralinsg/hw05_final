@@ -3,13 +3,11 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.test import TestCase, Client, override_settings
 from ..models import Group, Post, Comment, Follow
-from ..forms import CommentForm, FollowForm
 from django.urls import reverse
 from django import forms
 import shutil
 import tempfile
 from django.core.cache import cache
-from ..pagin import get_page_context
 
 User = get_user_model()
 
@@ -295,11 +293,15 @@ class FollowTests(TestCase):
     def test_post_unfollow(self):
         self.authorized_follower.get(
             reverse(
-                "posts:profile_follow", kwargs={"username": self.following.username})
+                "posts:profile_follow",
+                kwargs={"username": self.following.username}
+            )
         )
         self.authorized_follower.get(
             reverse(
-                "posts:profile_unfollow", kwargs={"username": self.following.username})
+                "posts:profile_unfollow",
+                kwargs={"username": self.following.username}
+            )
         )
         self.assertEqual(Follow.objects.all().count(), 0)
 
@@ -321,6 +323,8 @@ class FollowTests(TestCase):
     def test_subscribe_to_yourself(self):
         self.authorized_user_follower.get(
             reverse(
-                "posts:profile_follow", kwargs={"username": self.user_follower})
+                "posts:profile_follow",
+                kwargs={"username": self.user_follower}
+            )
         )
         self.assertEqual(Follow.objects.all().count(), 0)
