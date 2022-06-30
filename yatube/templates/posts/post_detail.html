@@ -1,0 +1,76 @@
+<head>
+  {% extends "base.html" %}
+  {% load thumbnail %}
+  {% load user_filters %}
+  {% load staticfiles %}
+
+  {% block title %}
+  <title>{{post_list.text|truncatechars:30}}</title>
+  {% endblock %}
+</head>
+<body>
+  <header>
+    {% include "includes/header.html" %}
+  </header>
+  <main>
+    {% block content %}
+    {% if is_edit %}
+    <from method="post"
+    action="{% url "posts:post_edit" %}">
+    {% else %}
+    <from method="post"action="{% url "posts:post_create" %}">
+      {% endif %}
+      {% csrf_token %}
+      <div class ="container py-5">
+        <div class="row">
+          <aside class="col-12 col-md-3">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                Дата публикации: {{post_list.pub_date|date:"d E Y"}}
+              </li>
+              <li class="list-group-item">
+                Группа:
+                {% if post.group %}
+                <a href="{% url "posts:group_list" post_list.group.slug %}">
+                  {{post_list.group}}
+                </a>
+                {% endif %}
+              </li>
+              <li class="list-group-item">
+                Автор: {{post_list.author.get_full_name}}
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                Всего постов автора: {{post_list.author.posts.count}}
+              </li>
+              <li class="list-group-item">
+                <a href="{% url "posts:profile" post_list.author %}">
+                  Все посты пользователя
+                </a>
+              </li>
+            </ul>
+          </aside>
+          <article class="col-12 col-md-9">
+            <p>
+              {{post_list.text}}
+            </p>
+            {% thumbnail post_list.image "960x339" crop="center" upscale=True as im %}
+            <img class="card-img my-2" src="{{ im.url }}">
+          {% endthumbnail %}
+          {% if user.is_authenticated %}
+          {% include "posts/includes/comment.html" %}
+          {% endif %}
+            <div class="d-flex justify-content-end">
+              <a class="btn btn-primary" href="{% url "posts:post_edit" post_id %}">
+                Редактировать запись
+              </a>
+            </article>
+          </div>
+        </div>
+    </form>
+  </main>
+  {% endblock %}
+    <footer>
+      {% include "includes/footer.html" %}
+    </footer>
+  </body>
+</html>
