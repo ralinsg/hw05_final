@@ -50,7 +50,6 @@ class PostModelTest(TestCase):
             author=cls.user,
             text="Тестовый комментарий 1"
         )
-        cls.form = CommentForm()
 
     @classmethod
     def tearDownClass(cls):
