@@ -137,7 +137,7 @@ def follow_index(request):
     text = "Мои подписки"
     follow_list = Post.objects.filter(author__following__user=request.user)
     paginator = Paginator(follow_list, 20)
-    page_namber = request.GET.get('page_obj')
+    page_namber = request.GET.get("page_obj")
     page_obj = paginator.get_page(page_namber)
     context = {
         "text": text,
@@ -150,8 +150,7 @@ def follow_index(request):
 def profile_follow(request, username):
     user = request.user
     author = User.objects.get(username=username)
-    is_follower = Follow.objects.filter(user=user, author=author)
-    if user != author and not is_follower.exists():
+    if user != author:
         Follow.objects.get_or_create(user=user, author=author)
     return redirect("posts:profile", username=username)
 
